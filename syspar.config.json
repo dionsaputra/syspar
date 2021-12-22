@@ -1,0 +1,22 @@
+{
+  "url": "http://localhost:7200/tix-hotel-cart/systemParameters",
+  "header": {
+    "Accept": "application/json",
+    "Content-Type": "application/json",
+    "storeId": "TIKETCOM",
+    "channelId": "WEB",
+    "requestId": "23123123",
+    "serviceId": "gateway",
+    "username": "username",
+    "lang": "en",
+    "x-forwarded-host": "127.0.0.1",
+    "customerIpAddress": "192.168.1.1",
+    "customerSessionId": "1234",
+    "user-agent": "chrome",
+    "currency": "IDR",
+    "verifiedPhoneNumber": "0",
+    "prevOrderId": "0",
+    "resellerId": "resellerId",
+    "X-Loyalty-Level": "LV1"
+  }
+}

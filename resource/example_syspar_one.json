@@ -1,0 +1,15 @@
+{
+  "integer": 1,
+  "boolean": true,
+  "float": 1.05,
+  "string": "testing",
+  "list": [
+    1,
+    2,
+    3
+  ],
+  "map": {
+    "key1": "value1",
+    "key2": "value2"
+  }
+}

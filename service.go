@@ -20,7 +20,7 @@ type SysparResponse struct {
 }
 
 type Service interface {
-	Set(syspar *PlainSyspar) error
+	Set(syspar PlainSyspar) (*PlainSyspar, error)
 	//Put(syspar *PlainSyspar) error
 }
 
@@ -28,23 +28,24 @@ type service struct {
 	restCall RestCall
 }
 
-func (s service) Set(syspar *PlainSyspar) error {
-	bodyReq, err := s.toBytes(*syspar)
+func (s service) Set(syspar PlainSyspar) (*PlainSyspar, error) {
+	bodyReq, err := s.toBytes(syspar)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	bodyRes, err := s.restCall.Post(bodyReq)
-	if err != nil {
-		return err
+	var bodyRes []byte
+	if syspar.Id == "" {
+		bodyRes, err = s.restCall.Post(bodyReq)
+	} else {
+		bodyRes, err = s.restCall.Put(syspar.Id, bodyReq)
 	}
 
-	syspar, err = s.toPlainSyspar(bodyRes)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	return nil
+	return s.toPlainSyspar(bodyRes)
 }
 
 func (s service) toBytes(syspar PlainSyspar) ([]byte, error) {

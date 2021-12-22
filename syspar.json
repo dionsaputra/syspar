@@ -1,0 +1,20 @@
+{
+	"id": "61c2fbfc25a9d82d871c0e91",
+	"variable": "json-syspar-2",
+	"description": "json syspar edited",
+	"value": {
+		"boolean": true,
+		"float": 1.05,
+		"integer": 1,
+		"list": [
+			1,
+			2,
+			3
+		],
+		"map": {
+			"key1": "value1",
+			"key2": "value2"
+		},
+		"string": "testing"
+	}
+}

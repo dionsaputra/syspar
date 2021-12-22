@@ -1,8 +1,11 @@
 package main
 
 import (
+	"encoding/json"
 	"log"
 	"net/http"
+	"syspar/file"
+	"syspar/rest"
 )
 
 func main() {
@@ -11,20 +14,30 @@ func main() {
 		log.Fatalln(err)
 	}
 
-	restCall := NewRestCall(http.Client{}, config)
-	service := NewService(restCall)
+	fileService := file.NewService(config.FileConfig)
+	restService := rest.NewService(http.Client{}, config.RestConfig)
 
-	syspar := PlainSyspar{
-		Id:          "61c2eb1f30233ab23447bc3a",
-		Variable:    "testing14",
-		Value:       "1, 2, 3, 4",
-		Description: "abc",
-	}
-
-	res, err := service.Set(syspar)
+	jsonSyspar, err := fileService.Read()
 	if err != nil {
 		log.Fatalln(err.Error())
 	}
 
-	log.Println(res)
+	byteVal, err := json.Marshal(jsonSyspar.Value)
+	if err != nil {
+		log.Fatalln(err.Error())
+	}
+
+	res, err := restService.Set(rest.StringSyspar{
+		Id:          jsonSyspar.Id,
+		Variable:    jsonSyspar.Variable,
+		Value:       string(byteVal),
+		Description: jsonSyspar.Description,
+	})
+	if err != nil {
+		log.Fatalln(err.Error())
+	}
+
+	jsonSyspar.Id = res.Id
+
+	log.Fatalln(fileService.Write(*jsonSyspar))
 }

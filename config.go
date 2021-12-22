@@ -4,11 +4,13 @@ import (
 	"encoding/json"
 	"io/ioutil"
 	"log"
+	"syspar/file"
+	"syspar/rest"
 )
 
 type Config struct {
-	Url    string            `json:"url"`
-	Header map[string]string `json:"header"`
+	RestConfig rest.RestConfig `json:"restConfig"`
+	FileConfig file.FileConfig `json:"fileConfig"`
 }
 
 func LoadConfig(config *Config) error {
